@@ -1,24 +1,32 @@
 ﻿using System.Text;
 using RabbitMQ.Client;
 
-var factory = new ConnectionFactory { HostName = "localhost" };
-using var connection = factory.CreateConnection();
-using var channel = connection.CreateModel();
+namespace Send;
 
-channel.QueueDeclare(queue: "hello",
-                     durable: false,
-                     exclusive: false,
-                     autoDelete: false,
-                     arguments: null);
+internal class Program
+{
+    public static void Main(string[] args)
+    {
+        var factory = new ConnectionFactory { HostName = "localhost", Password = "admin", UserName = "admin" };
+        using var connection = factory.CreateConnection();
+        using var channel = connection.CreateModel();
 
-var message = "Hello World!";
-var body = Encoding.UTF8.GetBytes(message);
+        channel.QueueDeclare(queue: "hello",
+            durable: false,
+            exclusive: false,
+            autoDelete: false,
+            arguments: null);
 
-channel.BasicPublish(exchange: string.Empty,
-                     routingKey: "hello",
-                     basicProperties: null,
-                     body: body);
-Console.WriteLine($" [x] Sent {message}");
+        var message = "This is the test message, that i am sending";
+        var body = Encoding.UTF8.GetBytes(message);
 
-Console.WriteLine(" Press [enter] to exit.");
-Console.ReadLine();
+        channel.BasicPublish(exchange: string.Empty,
+            routingKey: "hello",
+            basicProperties: null,
+            body: body);
+        Console.WriteLine($" [x] Sent {message}");
+
+        Console.WriteLine(" Press [enter] to exit.");
+        Console.ReadLine();
+    }
+}
