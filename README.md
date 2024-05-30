@@ -1,9 +1,68 @@
 **Prerequisites**
 This tutorial assumes RabbitMQ is installed and running on localhost on the standard port (5672). In case you use a different host, port or credentials, connections settings would require adjusting.
 
-**Introduction**
-RabbitMQ is a message broker: it accepts and forwards messages. You can think about it as a post office: when you put the mail that you want posting in a post box, you can be sure that the letter carrier will eventually deliver the mail to your recipient. In this analogy, RabbitMQ is a post box, a post office, and a letter carrier.
+**installing RabbitMQ on Windows:**
 
+### **Step 1: Install Erlang**
+#### 1. Download Erlang:
+* Visit the Erlang Solutions download page.
+* Download the appropriate Erlang/OTP installer for your Windows version.
+##### 2. Install Erlang:
+* Run the Erlang installer and follow the installation instructions.
+* Ensure the installation path does not contain spaces, e.g., `c:\Erlang`.
+
+### **Step 2: Install RabbitMQ**
+#### 1. Download RabbitMQ:
+* Go to the RabbitMQ download page.
+* Download the RabbitMQ installer (EXE file).
+##### 2. Install RabbitMQ:
+* Run the RabbitMQ installer and follow the prompts.
+* The default installation directory is usually `c:\Program Files\RabbitMQ` Server.
+
+### **Step 3: Set Up RabbitMQ Service**
+#### 1. Install RabbitMQ Service:
+* Open a command prompt as an administrator.
+* Navigate to the RabbitMQ sbin directory, which is typically located at:
+  ``cd "C:\Program Files\RabbitMQ Server\rabbitmq_server-x.x.x\sbin"``
+* Install the RabbitMQ service by running:
+ `rabbitmq-service.bat install`
+
+### **Step 4: Enable the RabbitMQ Management Plugin**
+#### 1. Enable the Plugin:
+* Still in the `sbin` directory, enable the RabbitMQ Management Plugin by running:
+`rabbitmq-plugins.bat enable rabbitmq_management
+  `
+#### 1. Enable the Plugin:
+* Still in the `sbin` directory, enable the RabbitMQ Management Plugin by running:
+  `rabbitmq-plugins.bat enable rabbitmq_management
+  `
+### **Step 5: Access the RabbitMQ Management Console**
+#### 1. Open the Management Console:
+* Open a web browser and go to `http://localhost:15672`.
+
+##### 2. Log In:
+* Use the default credentials: guest for the username and guest for the password.
+* Navigate to the RabbitMQ sbin directory.
+* Add a new user by running:
+ `rabbitmqctl.bat add_user myuser mypassword`
+
+### **Step 6: Create a New User (Optional but Recommended)**
+#### 1. Add a New User:
+* Open a command prompt as an administrator.
+* Navigate to the RabbitMQ sbin directory.
+* Add a new user by running:
+ `rabbitmqctl.bat add_user myuser mypassword
+  `
+#### 2. Set User Tags and Permissions:
+* Assign administrator tags to the new user:
+`rabbitmqctl.bat set_user_tags myuser administrator
+  `
+* Set the permissions for the new user:
+ `rabbitmqctl.bat set_permissions -p / myuser ".*" ".*" ".*"`
+
+Now RabbitMQ should be installed, configured, and running on your Windows system. You can manage it through the web-based RabbitMQ Management Console at `http://localhost:15672`.
+
+# DOTNET Configuration 
 **Setup**
 First let's verify that you have .NET Core toolchain in `PATH`:
  
